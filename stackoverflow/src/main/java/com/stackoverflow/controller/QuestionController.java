@@ -6,6 +6,8 @@ import com.stackoverflow.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping( "/questions")
 public class QuestionController {
@@ -14,30 +16,32 @@ public class QuestionController {
     QuestionService questionService;
 
     //read questions
-    @GetMapping( "/getAll")
+    @GetMapping("/getAll")
     @ResponseBody
-    public void retrieveQuestions() {
-        questionService.retrieveQuestions();
+    public List<Question> retrieveQuestions() {
+        return questionService.retrieveQuestions();
     }
 
     //create question
-    @PostMapping( "/create")
+    @PostMapping("/create")
     @ResponseBody
-    public void createQuestion(@RequestBody Question question){
-        questionService.createQuestion(question);
+    public Question createQuestion( @RequestBody Question question) {
+        return questionService.createQuestion(question);
     }
 
     //update question
-    @PutMapping( "/update")
+    @PutMapping("/update")
     @ResponseBody
-    public void updateQuestion(@RequestBody Question question){
-        questionService.updateQuestion(question);
+    public Question updateQuestion(@RequestBody Question question) {
+        return questionService.updateQuestion(question);
     }
 
     //delete question
-    @DeleteMapping( "/delete")
+    @DeleteMapping("/delete")
     @ResponseBody
-    public void deleteQuestion(@RequestBody Question question){
+    public void deleteQuestion(@RequestBody Question question) {
         questionService.deleteQuestion(question);
     }
+
+
 }
