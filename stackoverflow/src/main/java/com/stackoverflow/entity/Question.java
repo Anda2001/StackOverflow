@@ -1,7 +1,13 @@
 package com.stackoverflow.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Blob;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,9 +26,15 @@ public class Question {
    @ManyToOne
     @JoinColumn(name = "author", referencedColumnName = "cnp")
    private User user;
-
+//
     @Column(name = "creation_date")
-    private String creationDate;
+    private LocalDate creationDate = LocalDate.now();
+
+    @Column(name="creation_time")
+    private LocalTime creationTime = LocalTime.now();
+
+    @Column(name="image")
+    private byte[] image;
 
     @OneToMany(mappedBy = "question")
     private List<Answer> answers;
@@ -42,12 +54,15 @@ public class Question {
     public Question() {
     }
 
-    public Question(Long questionId, String title, String text, User user, String creationDate, List<Answer> answers, List<Tag> tags) {
+    public Question(Long questionId, String title, String text, User user, List<Answer> answers, List<QuestionTag> questionTags, byte[] image) {
         this.questionId = questionId;
         this.title = title;
         this.text = text;
         this.user = user;
-        this.creationDate = creationDate;
+        this.answers = answers;
+        this.image = image;
+        this.questionTags = questionTags;
+
     }
 
     public Long getQuestionId() {
@@ -82,11 +97,11 @@ public class Question {
         this.user = user;
     }
 
-    public String getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -99,4 +114,27 @@ public class Question {
     }
 
 
+    public Long getId() {
+        return questionId;
+    }
+
+    public void setId(Long id) {
+        this.questionId = id;
+    }
+
+    public List<QuestionTag> getQuestionTags() {
+        return questionTags;
+    }
+
+    public void setQuestionTags(List<QuestionTag> questionTags) {
+        this.questionTags = questionTags;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

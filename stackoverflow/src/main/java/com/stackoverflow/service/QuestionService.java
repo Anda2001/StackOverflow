@@ -20,8 +20,16 @@ public class QuestionService {
         return (List<Question>) questionRepository.findAll();
     }
 
+    public Question retrieveQuestionById(Long id) {
+        if(questionRepository.findById(id).isEmpty())
+            return null;
+        return questionRepository.findById(id).get();
+    }
+
     //create question
     public Question createQuestion(Question question) {
+        if(questionRepository.findById(question.getId()).isPresent())
+            return null;
        return questionRepository.save(question);
     }
 
@@ -31,8 +39,8 @@ public class QuestionService {
     }
 
     //delete question
-    public void deleteQuestion(Question question) {
-       questionRepository.delete(question);
+    public void deleteQuestion(Long id) {
+       questionRepository.delete(retrieveQuestionById(id));
     }
 
 

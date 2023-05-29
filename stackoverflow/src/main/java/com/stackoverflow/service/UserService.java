@@ -34,8 +34,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(User user) {
-        userRepository.delete(user);
+    public void deleteUser(Long cnp) {
+        userRepository.delete(retrieveUserById(cnp));
+
     }
 
     public User updateUser(User user) {

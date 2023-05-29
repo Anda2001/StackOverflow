@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping( "/questions")
 public class QuestionController {
@@ -16,10 +16,18 @@ public class QuestionController {
     QuestionService questionService;
 
     //read questions
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getAll")
     @ResponseBody
     public List<Question> retrieveQuestions() {
         return questionService.retrieveQuestions();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/getById/{id}")
+    @ResponseBody
+    public Question retrieveQuestionById(@PathVariable("id") Long id) {
+        return questionService.retrieveQuestionById(id);
     }
 
     //create question
@@ -37,10 +45,10 @@ public class QuestionController {
     }
 
     //delete question
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void deleteQuestion(@RequestBody Question question) {
-        questionService.deleteQuestion(question);
+    public void deleteQuestion(@PathVariable("id") Long id) {
+        questionService.deleteQuestion(id);
     }
 
 

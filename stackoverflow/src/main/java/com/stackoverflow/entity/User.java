@@ -15,8 +15,6 @@ public class User {
     @Column(name="cnp")
     private Long userId;
 
-    @Column(name = "l_name")
-    private String lastName;
 
     @Column(name = "f_name")
     private String firstName;
@@ -28,9 +26,8 @@ public class User {
     private String password;
 
 
-    public User(Long userId, String lastName, String firstName, String email, String password) {
+    public User(Long userId, String firstName, String email, String password) {
         this.userId = userId;
-        this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
         this.password = password;
@@ -53,14 +50,6 @@ public class User {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getFirstName() {
@@ -130,7 +119,6 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", email='" + email + '\'' +
                 '}';

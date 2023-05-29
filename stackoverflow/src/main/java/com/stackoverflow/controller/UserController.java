@@ -1,8 +1,10 @@
 package com.stackoverflow.controller;
 
 
+import com.stackoverflow.entity.Question;
 import com.stackoverflow.entity.User;
 import com.stackoverflow.service.UserService;
+import com.sun.tools.jconsole.JConsoleContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,11 +47,19 @@ public class UserController {
     }
 
     //delete user
-    @DeleteMapping("/delete")
+
+    @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void deleteUser(@RequestBody User user){
-        userService.deleteUser(user);
+    public void deleteUser(@PathVariable("id") Long id) {
+        System.out.println(id);
+        userService.deleteUser(id);
     }
 
+    public UserService getUserService() {
+        return userService;
+    }
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 }

@@ -22,8 +22,8 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @Column(name = "creation_date")
-    private String creationDate;
+//    @Column(name = "creation_date")
+//    private String creationDate;
 
     public Answer() {
     }
@@ -33,7 +33,7 @@ public class Answer {
         this.text = text;
         this.user = user;
         this.question = question;
-        this.creationDate = creationDate;
+       // this.creationDate = creationDate;
     }
 
     public Long getAnswerId() {
@@ -68,13 +68,13 @@ public class Answer {
         this.question = question;
     }
 
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
-    }
+//    public String getCreationDate() {
+//        return creationDate;
+//    }
+//
+//    public void setCreationDate(String creationDate) {
+//        this.creationDate = creationDate;
+//    }
 
     @Override
     public String toString() {
@@ -83,7 +83,6 @@ public class Answer {
                 ", text='" + text + '\'' +
                 ", user=" + user +
                 ", question=" + question +
-                ", creationDate='" + creationDate + '\'' +
                 '}';
     }
 
