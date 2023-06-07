@@ -55,6 +55,16 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    //ban user
+    @PutMapping("/ban/{id}")
+    @ResponseBody
+    public void banUser(@PathVariable("id") Long id) {
+        User user = userService.retrieveUserById(id);
+        boolean banned = user.getBanned();
+        user.setBanned(!banned);
+        userService.updateUser(user);
+    }
+
     public UserService getUserService() {
         return userService;
     }
@@ -62,4 +72,6 @@ public class UserController {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
+
+
 }

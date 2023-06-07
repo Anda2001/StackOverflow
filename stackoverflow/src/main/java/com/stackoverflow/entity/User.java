@@ -26,12 +26,15 @@ public class User {
     @Column(name = "passw")
     private String password;
 
+    @Column(name = "banned")
+    private boolean banned;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Vote> votes = new ArrayList<>();
 
 
-    public User(Long userId, String firstName, String email, String password, List<Question> questions, Set<Answer> answers, List<Vote> votes) {
+    public User(Long userId, String firstName, String email, String password, List<Question> questions, Set<Answer> answers, List<Vote> votes, boolean banned) {
         this.userId = userId;
         this.firstName = firstName;
         this.email = email;
@@ -39,6 +42,7 @@ public class User {
         this.questions = questions;
         this.answers = answers;
         this.votes = votes;
+        this.banned = banned;
     }
 
     public User() {
@@ -108,6 +112,14 @@ public class User {
 
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
+    }
+
+    public boolean getBanned() {
+    	return banned;
+    }
+
+    public void setBanned(boolean banned) {
+    	this.banned = banned;
     }
 
 

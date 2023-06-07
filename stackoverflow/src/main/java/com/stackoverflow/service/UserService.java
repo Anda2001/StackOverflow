@@ -1,6 +1,9 @@
 package com.stackoverflow.service;
 
+import com.stackoverflow.entity.Answer;
+import com.stackoverflow.entity.Question;
 import com.stackoverflow.entity.User;
+import com.stackoverflow.entity.Vote;
 import com.stackoverflow.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,12 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    QuestionService questionService;
+
+    @Autowired
+    VoteService voteService;
 
 
     public List<User> retrieveUsers() {
