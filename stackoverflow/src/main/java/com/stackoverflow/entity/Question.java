@@ -1,5 +1,6 @@
 package com.stackoverflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -8,7 +9,9 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "question")
@@ -36,8 +39,9 @@ public class Question {
     @Column(name="image")
     private byte[] image;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question")
-    private List<Answer> answers;
+    private Set<Answer> answers=new HashSet<>();
 
 //    @ManyToMany
 //    @JoinTable(
@@ -45,16 +49,22 @@ public class Question {
 //            joinColumns = @JoinColumn(name = "question_id"),
 //            inverseJoinColumns = @JoinColumn(name = "tag_id"))
 //    private List<Tag> tags;
-    //use QuestionTag instead of Tag so you dont have to use the many to many relationship
+    //use QuestionTag instead of Tag so you dont have to
+// use the many to many relationship
+    @JsonIgnore
     @OneToMany(mappedBy = "question")
-    private List<QuestionTag> questionTags;
+    private Set<QuestionTag> questionTags = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "question")
+    private Set<Vote> votes = new HashSet<>();
 
 
 
     public Question() {
     }
 
-    public Question(Long questionId, String title, String text, User user, List<Answer> answers, List<QuestionTag> questionTags, byte[] image) {
+    public Question(Long questionId, String title, String text, User user, Set<Answer> answers, Set<QuestionTag> questionTags, byte[] image, Set<Vote> votes) {
         this.questionId = questionId;
         this.title = title;
         this.text = text;
@@ -62,7 +72,7 @@ public class Question {
         this.answers = answers;
         this.image = image;
         this.questionTags = questionTags;
-
+        this.votes = votes;
     }
 
     public Long getQuestionId() {
@@ -105,11 +115,19 @@ public class Question {
         this.creationDate = creationDate;
     }
 
-    public List<Answer> getAnswers() {
+
+    public LocalTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalTime creationTime) {
+        this.creationTime = creationTime;
+    }
+    public Set<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
     }
 
@@ -122,11 +140,11 @@ public class Question {
         this.questionId = id;
     }
 
-    public List<QuestionTag> getQuestionTags() {
+    public Set<QuestionTag> getQuestionTags() {
         return questionTags;
     }
 
-    public void setQuestionTags(List<QuestionTag> questionTags) {
+    public void setQuestionTags(Set<QuestionTag> questionTags) {
         this.questionTags = questionTags;
     }
 
@@ -137,4 +155,14 @@ public class Question {
     public void setImage(byte[] image) {
         this.image = image;
     }
+
+
+    public Set<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
+    }
+
 }

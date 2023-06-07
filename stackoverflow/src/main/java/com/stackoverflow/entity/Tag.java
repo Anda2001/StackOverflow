@@ -1,5 +1,7 @@
 package com.stackoverflow.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.core.metrics.StartupStep;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,6 +26,7 @@ public class Tag {
 //    )
 //    private List<Question> questions;
     //use QuestionTag instead of Question so you dont have to use the many to many relationship
+    @JsonIgnore
     @OneToMany(mappedBy = "tag")
     private Set<QuestionTag> questionTags = new HashSet<>();
 
@@ -72,4 +75,6 @@ public class Tag {
                 ", title='" + title + '\'' +
                 '}';
     }
+
+
 }

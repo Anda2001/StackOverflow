@@ -11,11 +11,11 @@ public class QuestionTag {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     private Question question;
 
     @ManyToOne
-    @JoinColumn(name = "tag_id")
+    @JoinColumn(name = "tag_id", referencedColumnName = "id")
     private Tag tag;
 
     public QuestionTag() {

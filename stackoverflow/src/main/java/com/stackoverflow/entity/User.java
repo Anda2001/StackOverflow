@@ -1,5 +1,6 @@
 package com.stackoverflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,22 +26,31 @@ public class User {
     @Column(name = "passw")
     private String password;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Vote> votes = new ArrayList<>();
 
-    public User(Long userId, String firstName, String email, String password) {
+
+    public User(Long userId, String firstName, String email, String password, List<Question> questions, Set<Answer> answers, List<Vote> votes) {
         this.userId = userId;
         this.firstName = firstName;
         this.email = email;
         this.password = password;
+        this.questions = questions;
+        this.answers = answers;
+        this.votes = votes;
     }
 
     public User() {
 
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private Set<Answer> answers = new HashSet<>();
 
 
@@ -76,41 +86,31 @@ public class User {
         this.password = password;
     }
 
-//    public List<Question> getQuestions() {
-//        return questions;
-//    }
+    public List<Vote> getVotes() {
+        return votes;
+    }
 
-//    public void setQuestions(Set<Question> questions) {
-//        this.questions = questions;
-//    }
-//
-//    public Set<Answer> getAnswers() {
-//        return answers;
-//    }
-//
-//    public void setAnswers(Set<Answer> answers) {
-//        this.answers = answers;
-//    }
-//
-//    public void addQuestion(Question question) {
-//        questions.add(question);
-//        question.setUser(this);
-//    }
-//
-//    public void removeQuestion(Question question) {
-//        questions.remove(question);
-//        question.setUser(null);
-//    }
-//
-//    public void addAnswer(Answer answer) {
-//        answers.add(answer);
-//        answer.setUser(this);
-//    }
-//
-//    public void removeAnswer(Answer answer) {
-//        answers.remove(answer);
-//        answer.setUser(null);
-//    }
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
+
+
 
 
 

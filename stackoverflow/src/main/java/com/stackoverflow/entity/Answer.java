@@ -3,6 +3,11 @@ package com.stackoverflow.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Table(name = "answer")
 public class Answer {
@@ -14,26 +19,29 @@ public class Answer {
     @Column(name = "txt")
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "cnp")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id")
+    @ManyToOne
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     private Question question;
 
-//    @Column(name = "creation_date")
-//    private String creationDate;
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
+    @OneToMany(mappedBy = "answer")
+    private List<Vote> votes;
 
     public Answer() {
     }
 
-    public Answer(Long answerId, String text, User user, Question question, String creationDate) {
+    public Answer(Long answerId, String text, User user, Question question, List<Vote> votes) {
         this.answerId = answerId;
         this.text = text;
         this.user = user;
         this.question = question;
-       // this.creationDate = creationDate;
+        this.creationDate = LocalDate.now();
+        this.votes = votes;
     }
 
     public Long getAnswerId() {

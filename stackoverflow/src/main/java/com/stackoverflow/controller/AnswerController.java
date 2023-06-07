@@ -1,5 +1,6 @@
 package com.stackoverflow.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stackoverflow.entity.Answer;
 import com.stackoverflow.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class AnswerController {
     AnswerService answerService;
 
     //read answers
+    @JsonIgnore
     @GetMapping("/getAll")
     @ResponseBody
     public List<Answer> retrieveAnswers() {
@@ -36,9 +38,22 @@ public class AnswerController {
     }
 
     //delete answer
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public void deleteAnswer(@RequestBody Answer answer) {
-        answerService.deleteAnswer(answer);
+    public void deleteAnswer(@PathVariable Long id) {
+        List<Answer> answers = answerService.retrieveAnswers();
+        for (Answer answer : answers) {
+            if (answer.getAnswerId().equals(id)) {
+                answerService.deleteAnswer(answer);
+                break;
+            }
+        }
+    }
+
+    //get answers by question
+    @GetMapping("/getByQuestion/{id}")
+    @ResponseBody
+    public List<Answer> retrieveAnswersByQuestion(@PathVariable("id") Long id) {
+        return answerService.retrieveAnswersByQuestion(id);
     }
 }

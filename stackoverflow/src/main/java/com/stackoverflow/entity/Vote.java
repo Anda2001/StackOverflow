@@ -13,23 +13,31 @@ public class Vote {
 //    @JoinColumn(name = "user_id", referencedColumnName = "cnp", insertable = false, updatable = false)
 //    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "cnp")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     private Question question;
+
+    @ManyToOne
+    @JoinColumn(name = "answer_id", referencedColumnName = "id")
+    private Answer answer;
+
     @Column(name = "vote_type")
     private boolean voteType;
-    @Column(name = "creation_date")
-    private String creationDate;
+
 
     public Vote() {
     }
 
-    public Vote(Long voteId, User user, Question question, boolean voteType, String creationDate) {
+    public Vote(Long voteId, User user, Question question, boolean voteType, Answer answer) {
         this.voteId = voteId;
-       // this.user = user;
+        this.user = user;
         this.question = question;
         this.voteType = voteType;
-        this.creationDate = creationDate;
+        this.answer = answer;
     }
 
     public Long getVoteId() {
@@ -64,13 +72,23 @@ public class Vote {
         this.voteType = voteType;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public User getUser() {
+        return user;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
+
 
 
 

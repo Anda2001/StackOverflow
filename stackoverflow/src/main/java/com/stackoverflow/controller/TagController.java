@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tag")
+@RequestMapping("/tags")
 public class TagController {
 
     @Autowired
@@ -44,6 +44,20 @@ public class TagController {
     @ResponseBody
     public void deleteTag(@RequestBody Tag tag){
         tagService.deleteTag(tag);
+    }
+
+    //read tag by name
+    @GetMapping("/getByName/{name}")
+    @ResponseBody
+    public Tag retrieveTagByName(@PathVariable("name") String name) {
+        return tagService.retrieveTagByName(name);
+    }
+
+    //read tag by question id
+    @GetMapping("/getByQuestionId/{id}")
+    @ResponseBody
+    public List<Tag> retrieveTagByQuestionId(@PathVariable("id") int id) {
+        return tagService.retrieveTagByQuestionId(id);
     }
 
 }

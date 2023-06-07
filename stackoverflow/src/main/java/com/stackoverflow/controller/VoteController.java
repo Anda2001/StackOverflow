@@ -1,5 +1,6 @@
 package com.stackoverflow.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stackoverflow.entity.Vote;
 import com.stackoverflow.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,30 @@ public class VoteController {
     @ResponseBody
     public void deleteVote(@RequestBody Vote vote){
         voteService.deleteVote(vote);
+    }
+
+    //vote count
+    @JsonIgnore
+    @GetMapping("/getVoteCountByQuestionId/{id}")
+    @ResponseBody
+    public Integer getVoteCountByQuestionId(@PathVariable int id){
+        return voteService.getVoteCountByQuestionId(id);
+    }
+
+    //vote count by answer id
+    @JsonIgnore
+    @GetMapping("/getVoteCountByAnswerId/{id}")
+    @ResponseBody
+    public Integer getVoteCountByAnswerId(@PathVariable int id){
+        return voteService.getVoteCountByAnswerId(id);
+    }
+
+    //get score for user
+    @JsonIgnore
+    @GetMapping("/getScore/{id}")
+    @ResponseBody
+    public Float getScoreByUserId(@PathVariable Long id){
+        return voteService.getUserScore(id);
     }
 
 }
